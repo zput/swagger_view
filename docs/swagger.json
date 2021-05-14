@@ -1,0 +1,969 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "产品管理系统",
+        "title": "产品管理系统",
+        "termsOfService": "https://git.forchange.cn/manage/product",
+        "contact": {
+            "name": "周进、谢东阳",
+            "url": "https://git.forchange.cn/zhoujin",
+            "email": "zhoujin@forchange.tech"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+        "/applications": {
+            "get": {
+                "description": "通过 Site_id 查询applications",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "通过 Site_id 查询applications",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "每一个页application数量, 默认20",
+                        "name": "page_count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "默认第一页；从1开始",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "site 的 id",
+                        "name": "site_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "application的namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "获取当前场景文件获取功能：",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "Cleword 课程包应用上传",
+                "parameters": [
+                    {
+                        "description": "application 信息",
+                        "name": "app",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.ApplicationSaveReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    },
+                    "400": {
+                        "description": "参数格式有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    },
+                    "422": {
+                        "description": "参数值有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "通过 application_id 删除 application",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "通过 application_id 删除 application",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "application id",
+                        "name": "application_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/applications/brief": {
+            "get": {
+                "description": "通过 Site_id 查询applications 名称 版本",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "通过 Site_id 查询applications 名称 版本",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "site 的 id",
+                        "name": "site_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "application code",
+                        "name": "application_code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "application的namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/applications/details": {
+            "get": {
+                "description": "通过 application_code 查询applications的详情",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "通过 application_code 查询applications的详情",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "application code",
+                        "name": "application_code",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/book": {
+            "post": {
+                "description": "上传书籍详情：",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "book"
+                ],
+                "summary": "Book 上传书籍详情页面信息",
+                "parameters": [
+                    {
+                        "description": "书籍内容文稿信息",
+                        "name": "app",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.BookContent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.BookTTLRes"
+                        }
+                    },
+                    "400": {
+                        "description": "参数格式有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    },
+                    "422": {
+                        "description": "参数值有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/bool/ttl": {
+            "post": {
+                "description": "生成对应的文稿音频：",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "book"
+                ],
+                "summary": "Book 生成对应的文稿音频",
+                "parameters": [
+                    {
+                        "description": "书籍内容文稿信息",
+                        "name": "app",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.BookContent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.BookTTLRes"
+                        }
+                    },
+                    "400": {
+                        "description": "参数格式有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    },
+                    "422": {
+                        "description": "参数值有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/fid": {
+            "get": {
+                "description": "获取fid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "获取fid",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResultWithFid"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/applications": {
+            "post": {
+                "description": "获取当前场景文件获取功能：",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "财商课程包应用上传",
+                "parameters": [
+                    {
+                        "description": "课程信息",
+                        "name": "app",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.FinanceApplicationSaveReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    },
+                    "400": {
+                        "description": "参数格式有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    },
+                    "422": {
+                        "description": "参数值有误",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "通过 application_code 删除 application",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "通过 application_code 删除 application",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "application code",
+                        "name": "application_code",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/applications/all_detail": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "根据 application_code和version获取application-module-moduleConfig信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "application code",
+                        "name": "application_code",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "application版本号",
+                        "name": "version",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResultWithData"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/module-config": {
+            "post": {
+                "description": "保存 moduleConfig 信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "保存 moduleConfig 信息",
+                "parameters": [
+                    {
+                        "description": "config信息",
+                        "name": "app",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.AddModuleConfigReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResultWithData"
+                        }
+                    }
+                }
+            }
+        },
+        "/qiniu/token": {
+            "get": {
+                "description": "获取七牛云 token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "获取七牛云 token",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResultWithQiniuToken"
+                        }
+                    }
+                }
+            }
+        },
+        "/site/:id": {
+            "put": {
+                "description": "更新 site",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "更新 site",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "site_id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "site 更新内容",
+                        "name": "app",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateSiteReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/site/add": {
+            "post": {
+                "description": "保存 site 信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "保存 site 信息",
+                "parameters": [
+                    {
+                        "description": "site 信息",
+                        "name": "app",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.AddSiteReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.AddSiteResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/site/detail": {
+            "get": {
+                "description": "获取 site 详情",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "获取 site 详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "site 的 id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSiteDetailResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/site/list": {
+            "get": {
+                "description": "获取 Site 列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "manager"
+                ],
+                "summary": "获取 Site 列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "每一个页 site 数量, 默认20",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页数量",
+                        "name": "pageNum",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResultWithData"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.AddModuleConfigReq": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "module_id": {
+                    "type": "integer"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.AddSiteReq": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "profile": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.AddSiteResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "opt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ApplicationSaveReq": {
+            "type": "object",
+            "properties": {
+                "cleword_schema_version": {
+                    "type": "string"
+                },
+                "code": {
+                    "description": "applicationCode",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Namespace            string `json:\"namespace\"`",
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "publication": {
+                    "description": "Resolved             string `json:\"resolved\"`    // zip 课程包地址 URL",
+                    "type": "integer"
+                },
+                "resolved": {
+                    "description": "zip 课程包地址 URL",
+                    "type": "string"
+                },
+                "site_id": {
+                    "description": "site 点 id",
+                    "type": "integer"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.BookContent": {
+            "type": "object",
+            "properties": {
+                "about_author": {
+                    "description": "关于作者",
+                    "type": "string"
+                },
+                "author": {
+                    "description": "书籍的作者",
+                    "type": "string"
+                },
+                "book_isbn": {
+                    "description": "书籍的 isbn 号",
+                    "type": "string"
+                },
+                "content_text_url": {
+                    "description": "文本地址",
+                    "type": "string"
+                },
+                "cover_url": {
+                    "description": "封面url",
+                    "type": "string"
+                },
+                "essential": {
+                    "description": "一句话概要",
+                    "type": "string"
+                },
+                "framework": {
+                    "description": "书籍的思维导图",
+                    "type": "string"
+                },
+                "free": {
+                    "description": "书籍是否免费",
+                    "type": "boolean"
+                },
+                "gain": {
+                    "description": "读完本书你将获得",
+                    "type": "string"
+                },
+                "introduction": {
+                    "description": "本书简介",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "书籍名称",
+                    "type": "string"
+                },
+                "recommendation_ranking": {
+                    "description": "推荐等级",
+                    "type": "integer"
+                },
+                "tag": {
+                    "description": "标签",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "书籍版本",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.BookTTLRes": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "url": {
+                            "description": "生成的文稿 url",
+                            "type": "string"
+                        }
+                    }
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "opt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.FinanceApplicationSaveReq": {
+            "type": "object",
+            "properties": {
+                "cleword_schema_version": {
+                    "type": "string"
+                },
+                "code": {
+                    "description": "applicationCode",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Namespace            string `json:\"namespace\"`",
+                    "type": "string"
+                },
+                "publication": {
+                    "description": "Resolved             string `json:\"resolved\"`    // zip 课程包地址 URL",
+                    "type": "integer"
+                },
+                "resolved_by_direct": {
+                    "description": "财商不再需要财商Namespace",
+                    "type": "string"
+                },
+                "site_id": {
+                    "description": "site 点 id",
+                    "type": "integer"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.GetSiteDetailResp": {
+            "type": "object",
+            "properties": {
+                "site": {
+                    "$ref": "#/definitions/dto.Site"
+                }
+            }
+        },
+        "dto.Result": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "opt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ResultWithData": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "opt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ResultWithFid": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "fid": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "opt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ResultWithQiniuToken": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "domain": {
+                            "type": "string"
+                        },
+                        "uploadToken": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "opt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.Site": {
+            "type": "object",
+            "properties": {
+                "blockedReason": {
+                    "type": "string"
+                },
+                "blockedTime": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "profile": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UpdateSiteReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "profile": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
